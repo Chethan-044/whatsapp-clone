@@ -150,7 +150,7 @@ const updateProfile = async(req,res)=>{
         
     }
 
-    
+
 }
 
-module.exports = { sendOtp, verifyOtp };
+module.exports = { sendOtp, verifyOtp,updateProfile };
