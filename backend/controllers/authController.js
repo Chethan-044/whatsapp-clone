@@ -149,6 +149,8 @@ const updateProfile = async(req,res)=>{
         return response(res,200,'Failed to update profile')
         
     }
+
+    
 }
 
 module.exports = { sendOtp, verifyOtp };
