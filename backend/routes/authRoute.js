@@ -22,4 +22,11 @@ router.get(
   authController.checkAuthenticated,
 );
 
+router.get(
+  "/users",
+  authMiddleware,
+  authController.getAllUsers,
+);
+
+
 module.exports = router;
