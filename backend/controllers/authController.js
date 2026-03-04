@@ -153,4 +153,13 @@ const updateProfile = async(req,res)=>{
 
 }
 
-module.exports = { sendOtp, verifyOtp,updateProfile };
+const logout=(req,res)=>{
+    try {
+        res.cookie("token","",{expires:new Date(0)})
+        return response(res,200,'User logout successfully')
+    } catch (error) {
+        return response(res,200,'Enable to logout')
+    }
+}
+
+module.exports = { sendOtp, verifyOtp,updateProfile,logout };
