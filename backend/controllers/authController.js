@@ -202,7 +202,7 @@ const getAllUsers = async(req,res)=>{
                 }
             })
         )
-        return response(res,200,'user retrived successfully')
+        return response(res,200,'user retrived successfully',usersWithConversation)
     } catch (error) {
         console.error(error);
         return response(res,200,'Internal server error')
