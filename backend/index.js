@@ -5,7 +5,7 @@ const dotenv = require("dotenv")
 const connectDb = require("./config/dbconnect.js")
 const bodyparser =require("body-parser")
 const authRoute = require("./routes/authRoute.js")
-
+const chatRoute = require("./routes/chatRoute.js")
 dotenv.config();
 
 
@@ -24,7 +24,7 @@ connectDb();
 
 //routes
 app.use("/api/auth",authRoute)
-
+app.use("/api/chat",chatRoute)
 
 app.listen(PORT,(req,res)=>{
     console.log("App running at port",PORT);

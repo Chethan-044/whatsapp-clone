@@ -2,6 +2,9 @@ const express = require("express");
 const authController = require("../controllers/authController.js");
 const authMiddleware = require("../middleware/authMiddleware.js");
 const { multerMiddleware } = require("../config/cloudinary.js");
+const chatController = require("../controllers/chatController.js")
+
+
 
 const router = express.Router();
 
