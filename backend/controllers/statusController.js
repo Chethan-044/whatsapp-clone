@@ -60,7 +60,7 @@ exports.sendMessage = async(req,res)=>{
         return response(res,201,"status created successfully");
     } catch (error) {
         console.error(error);
-        return response(res,400,'Internal server error')
+        return response(res,500,'Internal server error')
 
         
     }
@@ -79,7 +79,7 @@ exports.getStatus = async(req,res)=>{
         return response(res,200,"statuses retrieved successfully", statuses);
     }catch(error){
         console.error(error);
-        return response(res,400,'Internal server error')
+        return response(res,500,'Internal server error')
     }
 }
 
@@ -100,15 +100,35 @@ exports.viewStatus = async(req,res)=>{
             .populate("user", "username profilePicture")
             .populate("viewers","username profilePicture")
 
+            return response(res,200,"status viewed successfully")
 
         }else{
             return response(res,200,"status already viewed")
         }
-        return response(res,200,"status viewed successfully")
         
+    } catch (error) {
+        console.error(error);
+        return response(res,500,'Internal server error')
+    }
+}
+
+exports.deleteStatus = async(req,res)=>{
+    try{
+          const {statusId}= req.params;
+        const userId = req.user.userId;
+        const status = await Status.findById(statusId);
+
+         if(!status){
+            return response(res,404,'status not found');
+        }
+        if(status.user.toString() !== userId) 
+            return response(res,403,'Not authorized to delete this status');
+
+        await Status.deleteOne();
+
+        return response(res,200,"status deleted successfully")
     } catch (error) {
         console.error(error);
         return response(res,400,'Internal server error')
     }
 }
-
