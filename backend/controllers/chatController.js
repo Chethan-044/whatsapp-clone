@@ -69,6 +69,17 @@ exports.sendMessage = async(req,res)=>{
         .populate("receiver", "username profilePicture")
 
 
+        //emit socket event to receiver for real time message update
+         if(req.io && req.socketUserMap){
+            const receiverSocketId = req.socketUserMap.get(receiverId);
+            if(receiverSocketId){
+                req.io.to(receiverSocketId).emit("receive_message",populatedMessage);
+                message.messageStatus = "delivered";
+                await message.save();
+            }
+        }
+
+
         return response(res,201,"message sent successfully");
     } catch (error) {
         console.error(error);
@@ -153,6 +164,16 @@ exports.markAsRead = async(req,res)=>{
             {_id : {$in: messageIds} , receiver:userId},
             {$set:{messageStatus:"read"}}
         )
+
+        //emit socket event to sender for real time message status update
+        if(req.io && req.socketUserMap){
+           for(const message of messages){
+            const senderSocketId = req.socketUserMap.get(message.sender.toString());
+            if(senderSocketId){
+                req.io.to(senderSocketId).emit("message_status_updated", { messageId: message._id, messageStatus: "read" });
+            }
+           }
+        }
 
         return response(res,200,"message marked as read",messages)
     }catch(error){
