@@ -170,7 +170,12 @@ exports.markAsRead = async(req,res)=>{
            for(const message of messages){
             const senderSocketId = req.socketUserMap.get(message.sender.toString());
             if(senderSocketId){
-                req.io.to(senderSocketId).emit("message_status_updated", { messageId: message._id, messageStatus: "read" });
+                const updatedMessage = {
+                    _id: message._id,
+                    messageStatus: "read"
+                }
+                req.io.to(senderSocketId).emit("message_read", updatedMessage);
+                await Message.save();
             }
            }
         }
@@ -195,6 +200,14 @@ exports.deleteMessage = async(req,res)=>{
         }
 
         await message.deleteOne();
+
+        //emit socket event to receiver for real time message deletion
+        if(req.io && req.socketUserMap){
+            const receiverSocketId = req.socketUserMap.get(message.receiver.toString());
+            if(receiverSocketId){
+                req.io.to(receiverSocketId).emit("message_deleted",  messageId );
+            }
+        }
 
         return response(res,200,"Message deleted successfully")
     }catch(error){
