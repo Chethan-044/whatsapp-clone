@@ -29,13 +29,18 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(bodyparser.urlencoded({extended:true}))
 
-connectDb();
+connectDb().catch(err => {
+  console.error('Database connection failed:', err);
+  process.exit(1);
+});
 
 //create http server
 const server = http.createServer(app);
 
 //initialize socket with the http server
 const io = initializeSocket(server);
+
+
 app.use((req,res,next)=>{
     req.io = io; //attach the io instance to the request object for use in routes
     req.socketUsermap = io.socketUsermap; //attach the online users map to the request object for use in routes
