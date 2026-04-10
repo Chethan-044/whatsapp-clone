@@ -36,6 +36,8 @@ const server = http.createServer(app);
 
 //initialize socket with the http server
 const io = initializeSocket(server);
+
+
 app.use((req,res,next)=>{
     req.io = io; //attach the io instance to the request object for use in routes
     req.socketUsermap = io.socketUsermap; //attach the online users map to the request object for use in routes
