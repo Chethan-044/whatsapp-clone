@@ -29,7 +29,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(bodyparser.urlencoded({extended:true}))
 
-connectDb();
+connectDb().catch(err => {
+  console.error('Database connection failed:', err);
+  process.exit(1);
+});
 
 //create http server
 const server = http.createServer(app);
