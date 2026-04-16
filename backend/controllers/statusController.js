@@ -105,7 +105,7 @@ exports.viewStatus = async(req,res)=>{
             Status.viewers.push(userId);
             await Status.save();
 
-            const updatedStatus = await status.findById(statusId)
+             const updatedStatus = await status.findById(statusId)
             .populate("user", "username profilePicture")
             .populate("viewers","username profilePicture")
 
