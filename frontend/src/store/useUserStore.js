@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-const useLoginStore = create(
+const useUserStore = create(
   persist(
     (set) => ({
       user: null,
@@ -15,11 +15,11 @@ const useLoginStore = create(
       },
     }),
     {
-      name: "login-storage",
+      name: "user-storage",
       getStorage: () => localStorage
       })
     
   
 );
 
-export default useLoginStore;
+export default useUserStore;
