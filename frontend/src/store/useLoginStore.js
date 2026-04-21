@@ -5,7 +5,7 @@ const useLoginStore = create(
     persist((set)=>({
         step:1,
         setStep:(step)=>set({step}),
-        setUserPhonedata:(data)=>set({userPhonedata:data}),
+        setUserPhoneData:(data)=>set({userPhonedata:data}),
         resetLoginState:()=> set({step:1,userPhonedata:null})
 
     }),
