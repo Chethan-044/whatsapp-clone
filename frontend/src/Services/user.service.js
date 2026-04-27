@@ -2,11 +2,11 @@ import axios from "axios"
 import axiosInstance from "./url.service"
 
 
-export const sendOtp = async(phoneNumber,PhoneSuffix,email) =>{
+export const sendOtp = async(phoneNumber,phoneSuffix,email) =>{
     try {
         const response = await axiosInstance.post('/auth/send-otp', {
             phoneNumber,
-            PhoneSuffix,
+            phoneSuffix,
             email
         });
         return response;
@@ -17,11 +17,11 @@ export const sendOtp = async(phoneNumber,PhoneSuffix,email) =>{
 
 
 
-export const verifyOtp = async(phoneNumber,PhoneSuffix,otp,email) =>{
+export const verifyOtp = async(phoneNumber,phoneSuffix,otp,email) =>{
     try {
         const response = await axiosInstance.post('/auth/verify-otp', {
             phoneNumber,
-            PhoneSuffix,
+            phoneSuffix,
             otp,
             email
         });

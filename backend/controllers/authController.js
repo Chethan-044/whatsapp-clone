@@ -88,8 +88,9 @@ const verifyOtp = async (req, res) => {
         }
 
         else {
-            if (!phoneNumber || !phoneSuffix)
-                return response(res, 400, "Phone number and suffix required");
+            if (!email && (!phoneNumber || !phoneSuffix)) {
+  return response(res, 400, "Phone number and suffix required");
+}
 
             const fullPhoneNumber = `${phoneSuffix}${phoneNumber}`;
 
