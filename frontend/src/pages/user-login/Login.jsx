@@ -186,11 +186,9 @@ const onLoginSubmit = async (data) => {
   try {
     setLoading(true);
 
-    console.log(userPhoneData);
 
     // ✅ keep this guard
     if (!userPhoneData?.phoneNumber && !userPhoneData?.email) {
-      console.log(userPhoneData);
       throw new Error("Phone number or email is missing");
     }
 
